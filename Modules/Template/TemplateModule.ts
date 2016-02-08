@@ -5,6 +5,7 @@ module BarcodeScanner_TSModules {
 
     export class TemplateModule extends geocortex.framework.application.ModuleBase 
     {
+        //Git test
         public _testVariable = "";
         public _theApp = null;
         public _theMap = null;

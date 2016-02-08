@@ -179,6 +179,7 @@ var BarcodeScanner_TSModules;
         __extends(TemplateModule, _super);
         function TemplateModule(app, lib) {
             _super.call(this, app, lib);
+            //Git test
             this._testVariable = "";
             this._theApp = null;
             this._theMap = null;
