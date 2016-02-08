@@ -1,0 +1,88 @@
+﻿<div class="template-module-view">
+    <div id="demoConditions">
+        <div id="mode">
+            <h2>Demonstration Configuration Area!!!</h2>
+        </div>
+        <br><div id="checkboxes">
+            <input type="checkbox" id="chkMockGPS" checked>Mock Position (lat.,long.): &nbsp;</INPUT><input type="text" value="29.653,-82.34|29.644593,-82.325020|29.650540, -82.342786|29.639971, -82.367637" id="txtMockGPS" />
+            <br><br>
+            <input type="checkbox" checked id="chkMockScans">Mock Scan &nbsp; Scan: </INPUT><input type="text" value="ABC-019|ABC-001|ABC-002|ABC-003" id="txtMockScan" />
+
+        </div>
+
+    </div>
+
+    <div id="positionDiv">
+        <image src="Resources/Images/ZoomToGPS.png" id="btnZoomToGPS"></image>&nbsp;&nbsp;&nbsp;
+        <div id="positionText">
+            <label onclick="NextGpsPosition()">GPS Position: </label> <input type="text" width="30" id="gpsPosition" data-binding="{@value: gpsPosition}" />
+            <span id="dfcFeaturesFound" onclick="ToggleDemoConditions()">0 design features found!</span>
+        </div>
+    </div>
+    <image id="btnScan"  src="Resources/Images/barcode.png"></image>&nbsp;&nbsp;&nbsp;
+    <div id="scanText">
+        <label  id="mockScanText">Scan Code: </label>
+        <input type="text" width="30" id="txtScanText" value="-----------------" data-binding="{@value: scanText}" />
+    </div>
+    
+    <div id="MatchingCUCode"></div>
+
+    <div id="WhenScanComplete">
+        <hr>
+        <div id="scanAttributes">Attributes of <span id="attributesOfText">---</span></div>
+        <div id="table">
+            <table id="barcodeTable" border="0">
+                <th>FIELD</th>
+                <th>VALUE</th>
+                <!--
+                <tr><td>CU Code</td><td>ZXCV-1234</td></tr>
+                <tr><td>SubyteCD</td><td>Reducer</td></tr>
+                <tr><td>Material</td><td>Plastic</td></tr>
+                <tr><td>Diameter</td><td>.5"</td></tr>
+                <tr><td>Style</td><td>Chicago</td></tr>-->
+            </table>
+        </div>
+        <div>
+            <br>
+            <div id="DesignFeaturesWithin30m">Design features within 30m</div>
+            <select name="sometext" onclick="ZoomToMyFeature" size="5" id="featuresInExtent">
+
+            </select>
+            <hr>
+            <div>
+
+                <div id="Buttons">
+                    <input type="button" id="btnAffix" disabled="true"  value="Affix Barcode" />
+                    <input type="button" id="btnReplace" onclick="alert('Delete existing feature then create new one with barcode attributes')" value="Replace" />
+                    <input type="button" id="btnInstall"  value="Install" />
+                    <input type="button" id="btnCancel" onclick="alert('Cancel')" value="Cancel" />
+                </div>
+            </div>
+            <br /><br />
+        </div>
+
+
+        <!--
+        <div class="template-module-view">
+        <b><span data-binding="{@text: greeting}"></span></b>
+            <div id="scanArea">
+                <button id="btnAdd" class="button">Add</button>
+                <button id="btnScan" class="button">Scan</button>
+                <button id="btnMockScan" class="button">Mock Scan</button>
+                <div id="scanResult" data-binding="{@text: code}">Press Scan</div>
+                <label>GPS Position: </label> <input type="text" width="30" id="gpsPosition" data-binding="{@value: gpsPosition}" />
+                <button id="btnZoomToGPS" class="button">Zoom to</button>
+                <button id="btnMock" class="button">Mock GPS</button>
+            </div>
+            <div id="scanNotFound" data-binding="{@visible: showCodeNotFound}">Scan did not work! </div>
+            <div id="scanResults">
+                <label>Field 1: </label> <input value="default" type="text" id="field1" data-binding="{@value: field1}"/>
+                <label>Field 2: </label> <input type="text" id="field2" data-binding="{@value: field2}" />
+            </div>
+            <div>
+                asdf to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32
+                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32
+                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32
+            </div>
+            <button id="btnApply" class="button">Apply</button>
+        </div>-->
