@@ -271,7 +271,8 @@ var BarcodeScanner_TSModules;
         };
         TemplateModule.prototype.executeAffixBarcode = function (FSCid) {
             var _this = this;
-            this._selectedFeature.attributes["BARCODE"] = "IT WORKED!";
+            var barcode = $("#txtScanText").val();
+            this._selectedFeature.attributes["BARCODE"] = barcode;
             var layer = BarcodeScanner_TSModules.Utilities.getFeatureLayer("Dx Non-Controllable Fitting", this.app.site);
             //var mapService = Utilities.services.cBMobile.Utilities.LayerUtilities.getMapServiceByLayer(layer, this.app.site); //River Taig (commented)
             var mapService = BarcodeScanner_TSModules.Utilities.getMapServiceByLayer(layer, this.app.site); //River Taig
@@ -295,28 +296,58 @@ var BarcodeScanner_TSModules;
         };
         TemplateModule.prototype.addFeature = function () {
             var _this = this;
-            //alert("adding feature");
-            //return;
-            var geom = this.getMapPointFromLatLong();
-            var newgcxFeature = BarcodeScanner_TSModules.Utilities.createNewGcxFeature("Dx Non-Controllable Fitting", this.app.site, "Abandon", "Abandon", geom);
-            var feature = newgcxFeature.esriFeature.get();
-            feature.attributes["BARCODE"] = "Instaled!!"; //TODO update with actualy barcode 
-            var layer = BarcodeScanner_TSModules.Utilities.getFeatureLayer("Dx Non-Controllable Fitting", this.app.site);
-            //var mapService = Utilities.services.cBMobile.Utilities.LayerUtilities.getMapServiceByLayer(layer, this.app.site); //River Taig (commented)
-            var mapService = BarcodeScanner_TSModules.Utilities.getMapServiceByLayer(layer, this.app.site); //River Taig
-            var editDescriptor = {
-                "mapService": mapService,
-                "layer": layer,
-                "feature": feature,
-                "successCallback": function () {
-                    console.log("editDescriptor successCallback");
-                    _this.app.command("ShowFeatureDetails").execute(feature);
-                },
-                "errorCallback": function (error) {
-                    alert("failed: " + error.message);
+            this.esriQueryTask = new esri.tasks.QueryTask("http://52.1.143.233/arcgis103/rest/services/Schneiderville/SEGasExpress/FeatureServer/11");
+            this.esriQuery = new esri.tasks.Query();
+            var mapPoint = this.getMapPointFromLatLong();
+            var ext = new esri.geometry.Extent(mapPoint.x - 100, mapPoint.y - 100, mapPoint.x + 100, mapPoint.y + 100, this.app.map.spatialReference);
+            this.esriQuery.geometry = ext;
+            this.esriQuery.returnGeometry = true;
+            this.esriQuery.spatialRelationship = "esriSpatialRelIntersects";
+            this.esriQuery.outFields = ["*"];
+            var that = this;
+            this.esriQueryTask.execute(this.esriQuery, function (results) {
+                var nearestDistanceSquared = 1000000;
+                var snapPoint = null;
+                for (var n = 0; n < results.features.length; n++) {
+                    var esriGraphic = results.features[n];
+                    var polyLine = esriGraphic.geometry;
+                    for (var vert = 0; vert < polyLine.paths[0].length; vert++) {
+                        var xCoord = polyLine.paths[0][vert][0];
+                        var yCoord = polyLine.paths[0][vert][1];
+                        var deltaX = (mapPoint.x - xCoord);
+                        var deltaY = (mapPoint.y - yCoord);
+                        var thisDistanceSquared = ((deltaX) * (deltaX)) + ((deltaY) * (deltaY));
+                        if (thisDistanceSquared < nearestDistanceSquared) {
+                            nearestDistanceSquared = thisDistanceSquared;
+                            snapPoint = new esri.geometry.Point(xCoord, yCoord, that.app.map.spatialReference);
+                        }
+                    }
                 }
-            };
-            this.app.command("CreateFeature").execute(editDescriptor); //River Taig
+                if (snapPoint != null) {
+                    var barcode = $("#txtScanText").val();
+                    //return;
+                    var geom = snapPoint;
+                    var newgcxFeature = BarcodeScanner_TSModules.Utilities.createNewGcxFeature("Dx Non-Controllable Fitting", _this.app.site, "Install", "Install", geom);
+                    var feature = newgcxFeature.esriFeature.get();
+                    feature.attributes["BARCODE"] = barcode; //TODO update with actualy barcode 
+                    var layer = BarcodeScanner_TSModules.Utilities.getFeatureLayer("Dx Non-Controllable Fitting", _this.app.site);
+                    //var mapService = Utilities.services.cBMobile.Utilities.LayerUtilities.getMapServiceByLayer(layer, this.app.site); //River Taig (commented)
+                    var mapService = BarcodeScanner_TSModules.Utilities.getMapServiceByLayer(layer, _this.app.site); //River Taig
+                    var editDescriptor = {
+                        "mapService": mapService,
+                        "layer": layer,
+                        "feature": feature,
+                        "successCallback": function () {
+                            console.log("editDescriptor successCallback");
+                            _this.app.command("ShowFeatureDetails").execute(newgcxFeature);
+                        },
+                        "errorCallback": function (error) {
+                            alert("failed: " + error.message);
+                        }
+                    };
+                    _this.app.command("CreateFeature").execute(editDescriptor); //River Taig
+                }
+            });
         };
         TemplateModule.prototype.apply = function () {
             alert("This will create or update a feature with the associated bar code: " +
