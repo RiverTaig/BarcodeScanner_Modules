@@ -1,6 +1,6 @@
 ﻿/// <reference path="../Resources/Libs/Framework.d.ts" />
 /// <reference path="../Resources/Libs/Mapping.Infrastructure.d.ts" />
-module BarcodeScanner_TSModules {
+module GeocortexCore {
     export class Utilities {
 
 

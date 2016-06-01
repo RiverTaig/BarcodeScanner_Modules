@@ -16,32 +16,43 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Modules\Template\Images\Custom\barcode.png" />
-    <Content Include="Modules\Template\Images\Custom\ZoomToGPS.png" />
-    <Content Include="Modules\Template\Readme.txt" />
-    <Content Include="Modules\Template\TemplateModule.css" />
-    <Content Include="Modules\Template\TemplateModuleView.html" />
+    <Content Include="Modules\FindFeeder\colors.js" />
+    <Content Include="Modules\FindFeeder\defaults.css" />
+    <Content Include="Modules\FindFeeder\demo.css" />
+    <Content Include="Modules\FindFeeder\FindFeederModule.css" />
+    <Content Include="Modules\FindFeeder\FindFeederView.html" />
+    <Content Include="Modules\FindFeeder\index.js" />
+    <Content Include="Modules\FindFeeder\JavaScript1.js" />
     <Content Include="ResourceManifest.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Resources\Compiled\Images\Custom\barcode.png" />
-    <Content Include="Resources\Compiled\Images\Custom\ZoomToGPS.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Modules\Template\Language.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Modules\Template\TemplateModule.ts" />
-    <TypeScriptCompile Include="Modules\Template\TemplateModuleView.ts" />
-    <TypeScriptCompile Include="Modules\Template\TemplateModuleViewModel.ts" />
+    <TypeScriptCompile Include="Modules\FindFeeder\FindFeederModule.ts" />
+    <TypeScriptCompile Include="Modules\FindFeeder\FindFeederView.ts" />
+    <TypeScriptCompile Include="Modules\FindFeeder\FindFeederViewModel.ts" />
+    <TypeScriptCompile Include="Modules\FindFeeder\typeahead.d.ts" />
     <TypeScriptCompile Include="Utilities\Utilities.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Compiled\" />
+    <Folder Include="Resources\Libs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>BarcodeScanner_TSModules</RootNamespace>
+    <RootNamespace>AcmeUtilitiesModules</RootNamespace>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -67,7 +78,7 @@
     <TypeScriptTarget>ES3</TypeScriptTarget>
     <TypeScriptIncludeComments>true</TypeScriptIncludeComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
-    <TypeScriptOutFile>.\Resources\TSout\BarcodeScanner_Modules_ts_out.js</TypeScriptOutFile>
+    <TypeScriptOutFile>.\Resources\TSout\AcmeUtilities_Modules_ts_out.js</TypeScriptOutFile>
     <TypeScriptGeneratesDeclarations>true</TypeScriptGeneratesDeclarations>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
@@ -79,9 +90,10 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" />
   <PropertyGroup>
-    <PostBuildEvent>Java -jar "$(ProjectDir)\Resources\Tools\ResourceCompilerTool.jar" "$(ProjectDir)ResourceManifest.xml" "$(ProjectDir)\" "BarcodeScanner_Modules" "$(ProjectDir)Resources\Compiled\BarcodeScanner_Modules_out.js"
-xcopy  /E /Y /R "$(ProjectDir)Resources\Compiled\*.*" "$(SolutionDir)Site\BarcodeScanner\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Compiled\"
-xcopy  /E /Y /R "$(ProjectDir)Resources\Compiled\*.*" "C:\Program Files (x86)\SchneiderElectric\ArcFM Web\Default\REST Elements\Sites\LINK22\Viewers\BarcodeScanner_hv\VirtualDirectory\Resources\Compiled\"
+    <PostBuildEvent>Java -jar "$(ProjectDir)Resources\Tools\ResourceCompilerTool.jar" "$(ProjectDir)ResourceManifest.xml" "$(ProjectDir)\" "FindFeederModules" "$(ProjectDir)Resources\Compiled\FindFeederModules_out.js"
+
+xcopy  /E /Y /R "$(ProjectDir)Resources\Compiled\*.*" "C:\Program Files (x86)\SchneiderElectric\ArcFM Web\ArcFMWeb450\REST Elements\Sites\Find_Feeders\Viewers\Find_Feeders\VirtualDirectory\Resources\Compiled"
+
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
